@@ -26,10 +26,10 @@ import { ClientRouter } from "astro:transitions"
 
   <meta name="theme-color" content="#0a0a0a">
 
-  <link rel="icon" type="image/png" href={`${import.meta.env.BASE_URL}favicon-96x96.png`} sizes="96x96">
-  <link rel="icon" type="image/png" href={`${import.meta.env.BASE_URL}favicon.png`}>
-  <link rel="apple-touch-icon" sizes="180x180" href={`${import.meta.env.BASE_URL}apple-touch-icon.png`}>
-  <link rel="manifest" href={`${import.meta.env.BASE_URL}site.webmanifest`}>
+  <link rel="icon" type="image/png" href={`${import.meta.env.BASE_URL}/favicon-96x96.png`.replace(/\/\/+/g, '/')} sizes="96x96">
+  <link rel="icon" type="image/png" href={`${import.meta.env.BASE_URL}/favicon.png`.replace(/\/\/+/g, '/')}>
+  <link rel="apple-touch-icon" sizes="180x180" href={`${import.meta.env.BASE_URL}/apple-touch-icon.png`.replace(/\/\/+/g, '/')}>
+  <link rel="manifest" href={`${import.meta.env.BASE_URL}/site.webmanifest`.replace(/\/\/+/g, '/')}>
 
   <link rel="sitemap" href="/sitemap-index.xml">
   <link
