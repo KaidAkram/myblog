@@ -1,0 +1,237 @@
+---
+import MoonIcon from "@/assets/icons/moon.svg"
+import SunIcon from "@/assets/icons/sun.svg"
+---
+
+<button id="theme-toggle" data-icon-button aria-label="Toggle theme">
+  <light-icon><SunIcon /></light-icon>
+  <dark-icon><MoonIcon /></dark-icon>
+</button>
+
+<div id="nani-modal" class="nani-modal-overlay hidden">
+  <div class="kali-window">
+    <div class="kali-header">
+      <span class="kali-title">root@0xAkr4m:~</span>
+      <div class="kali-buttons">
+        <span class="btn-min"></span>
+        <span class="btn-max"></span>
+        <span class="btn-close"></span>
+      </div>
+    </div>
+    <div class="kali-body">
+      <p><span class="kali-prompt">root@0xAkr4m:~#</span> ./light_mode.sh</p>
+      <p class="error-msg">bash: ./light_mode.sh: Permission denied</p>
+      <br/>
+      <p class="vagabond-text">"Do nothing which is of no use." — Miyamoto Musashi</p>
+      <p class="lore-text"><strong>NANI?!</strong> You dare invite the light?</p>
+      <p class="lore-text">A true digital rōnin strikes from the shadows. Turn back before you lose your way.</p>
+      <br/>
+      <p><span class="kali-prompt">root@0xAkr4m:~#</span> <span class="typing-cursor">_</span></p>
+      <button id="nani-close" class="kali-close-btn">Abort (Ctrl+C)</button>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  :root[data-theme="light"] {
+    color-scheme: light;
+  }
+
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+  }
+
+  dark-icon {
+    display: none;
+  }
+
+  :root[data-theme="dark"] {
+    light-icon {
+      display: none;
+    }
+
+    dark-icon {
+      display: inline;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+      light-icon {
+        display: none;
+      }
+
+      dark-icon {
+        display: inline;
+      }
+    }
+  }
+
+  .nani-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  .nani-modal-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .kali-window {
+    background: rgba(10, 10, 10, 0.95);
+    border: 1px solid #333;
+    width: 90%;
+    max-width: 550px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.9), 0 0 20px rgba(196, 30, 58, 0.2);
+    font-family: var(--font-mono, monospace);
+    text-align: left;
+    backdrop-filter: blur(10px);
+  }
+  .nani-modal-overlay:not(.hidden) .kali-window {
+    animation: terminal-boot 0.3s ease-out both;
+  }
+  .kali-header {
+    background: #1a1a1a;
+    padding: 0.4rem 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+  }
+  .kali-title {
+    color: #888;
+    font-size: 0.8rem;
+  }
+  .kali-buttons span {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-left: 6px;
+  }
+  .btn-min { background: #268bd2; }
+  .btn-max { background: #2aa198; }
+  .btn-close { background: #dc322f; }
+  
+  .kali-body {
+    padding: 1.5rem;
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+
+    @media (width < 40rem) {
+      font-size: 0.8rem;
+      padding: 1rem;
+    }
+  }
+  .kali-prompt {
+    color: #c41e3a; /* Samurai crimson */
+    font-weight: bold;
+    margin-right: 0.5rem;
+  }
+  .error-msg {
+    color: #dc322f;
+    margin-top: 0.5rem;
+  }
+  .vagabond-text {
+    color: #888;
+    font-style: italic;
+    border-left: 2px solid #555;
+    padding-left: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .lore-text {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+  .lore-text strong {
+    color: #dc322f;
+    font-size: 1.1em;
+  }
+  .typing-cursor {
+    animation: blink 1s step-end infinite;
+  }
+  .kali-close-btn {
+    background: transparent;
+    border: 1px solid #dc322f;
+    color: #dc322f;
+    padding: 0.5rem 1rem;
+    margin-top: 2rem;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+    border-radius: 3px;
+    transition: all 0.2s;
+  }
+  .kali-close-btn:hover {
+    background: #dc322f;
+    color: #000;
+  }
+
+  @keyframes terminal-boot {
+    0% { transform: scale(0.95) translateY(10px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+  }
+  
+  @keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+  }
+</style>
+
+<script>
+  const setupThemeToggle = () => {
+    const toggleTheme = () => {
+      // Play the Angry Vegeta NANI sound from local public folder
+      const audio = new Audio(`${import.meta.env.BASE_URL}vegeta.webm`)
+      audio.currentTime = 2 // start at 3 seconds as requested
+      audio.volume = 0.5 // reduced volume
+      audio.play().catch((e) => console.log("Audio play failed:", e))
+      
+      // Stop the audio after exactly 1,5 second so it doesn't play the whole video
+      setTimeout(() => {
+        audio.pause()
+      }, 1500)
+
+      // Show custom modal
+      const modal = document.getElementById("nani-modal")
+      if (modal) {
+        // Ensure the modal is at the root level to escape any stacking contexts
+        if (modal.parentNode !== document.body) {
+          document.body.appendChild(modal)
+        }
+        modal.classList.remove("hidden")
+      }
+    }
+
+    const button = document.getElementById("theme-toggle")
+    if (button) button.onclick = toggleTheme
+
+    const hideModal = () => {
+      const modal = document.getElementById("nani-modal")
+      if (modal) modal.classList.add("hidden")
+    }
+
+    const closeBtn = document.getElementById("nani-close")
+    if (closeBtn) closeBtn.onclick = hideModal
+
+    const redCircle = document.querySelector(".btn-close")
+    if (redCircle) {
+      redCircle.style.cursor = "pointer"
+      redCircle.onclick = hideModal
+    }
+  }
+
+  // Ensure scripts re-run when Astro swaps the page during ViewTransitions
+  document.addEventListener("astro:page-load", setupThemeToggle)
+</script>

@@ -1,0 +1,165 @@
+:root {
+  /* Vagabond Dark Theme — Ink & Parchment */
+  --gray-1:  #0a0a0a;           /* Deep ink black — background */
+  --gray-2:  #111110;           /* Charcoal wash */
+  --gray-3:  #1a1916;           /* Dark woodgrain */
+  --gray-4:  #232119;           /* Aged timber */
+  --gray-5:  #2d2a21;           /* Warm shadow */
+  --gray-6:  #3a3528;           /* Border — worn parchment edge */
+  --gray-7:  #4a4435;           /* Ink-stained border */
+  --gray-8:  #6b6350;           /* Muted brush */
+  --gray-9:  #7a7260;           /* Mid-tone ink */
+  --gray-10: #8a8070;           /* Faded calligraphy */
+  --gray-11: #b8ad9a;           /* Warm parchment muted */
+  --gray-12: #e8e0d4;           /* Parchment white — foreground */
+
+  --red-9:  #c41e3a;            /* Samurai crimson */
+  --red-11: #ff4d4d;            /* Blood red glow */
+
+  --background:         var(--gray-1);
+  --foreground:         var(--gray-12);
+  --primary:            var(--gray-12);
+  --primary-foreground: var(--gray-1);
+  --muted:              var(--gray-3);
+  --muted-foreground:   var(--gray-11);
+  --destructive:        var(--red-11);
+  --border:             var(--gray-6);
+  --ring:               var(--gray-8);
+  --accent:             var(--red-9);
+
+  color-scheme: dark;
+}
+
+*,
+::before,
+::after,
+::backdrop,
+::file-selector-button {
+  border-color: var(--border);
+
+  &:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 0.25rem;
+    border-radius: var(--radius-sm);
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* === Vagabond Ink Effects === */
+
+/* Subtle ink texture on body */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.015;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, #e8e0d4 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, #c41e3a 0%, transparent 40%);
+  mix-blend-mode: overlay;
+}
+
+/* Ink brush stroke decorative dividers */
+hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--gray-6) 15%,
+    var(--gray-8) 40%,
+    var(--accent) 50%,
+    var(--gray-8) 60%,
+    var(--gray-6) 85%,
+    transparent 100%
+  );
+  margin-block: var(--space-m);
+  opacity: 0.6;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gray-2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gray-6);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Selection color */
+::selection {
+  background: color-mix(in oklab, var(--accent) 30%, transparent);
+  color: var(--foreground);
+}
+
+/* Smooth transitions */
+a {
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+/* Post banner cinematic treatment */
+post-banner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      transparent 60%,
+      color-mix(in oklab, var(--background) 80%, transparent) 100%
+    );
+    pointer-events: none;
+  }
+
+  img {
+    filter: grayscale(20%) contrast(1.1);
+    transition: filter 0.3s ease;
+  }
+
+  &:hover img {
+    filter: grayscale(0%) contrast(1.05);
+  }
+}
+
+/* Accent color on hover for nav links */
+nav a:hover {
+  color: var(--foreground) !important;
+}
+
+/* Subtle glow on headings */
+prose-content h2,
+prose-content h3 {
+  position: relative;
+}
+
+prose-content h2::before {
+  content: "";
+  position: absolute;
+  left: -1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  background: var(--accent);
+  border-radius: 2px;
+  opacity: 0.6;
+}

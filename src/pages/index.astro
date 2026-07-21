@@ -1,0 +1,157 @@
+---
+import MetaPage from "@/components/MetaPage.astro"
+import SocialIcons from "@/components/SocialIcons.astro"
+import Layout from "@/layouts/Layout.astro"
+import { SOCIALS } from "@/consts"
+import { Image } from "astro:assets"
+import profilePic from "@/assets/myprofilepic.jpg"
+import BlogCard from "@/components/BlogCard.astro"
+import { getPosts } from "@/lib/content"
+
+const allPosts = await getPosts()
+const recentPosts = allPosts.slice(0, 3)
+---
+
+<Layout>
+  <MetaPage slot="head" />
+  <hero-section>
+    <hero-avatar>
+      <Image
+        src={profilePic}
+        alt="0xAkr4m — Miyamoto Musashi"
+        width={120}
+        height={120}
+        loading="eager"
+      />
+    </hero-avatar>
+    <hero-content>
+      <h1 transition:name="hero-title">0xAkr4m</h1>
+      <p class="tagline">
+        Red Teamer · AI Security Enthusiast · Digital Rōnin
+      </p>
+      <p class="quote">
+        <em>"Perceive that which cannot be seen with the eye."</em>
+        <span class="quote-attr">— Miyamoto Musashi</span>
+      </p>
+      <SocialIcons links={SOCIALS} />
+    </hero-content>
+  </hero-section>
+  <hr />
+  <prose-content>
+    <p>
+      Walking the path of the sword in cyberspace. I break things, dissect AI, and document the 3 AM madness. Welcome to my dojo.
+    </p>
+  </prose-content>
+
+  <recent-posts>
+    <h2>Recent Transmissions</h2>
+    <ul class="post-list" transition:name="recent-posts">
+      {recentPosts.map((post) => <BlogCard post={post} />)}
+    </ul>
+    <p class="view-all">
+      <a href={`${import.meta.env.BASE_URL}blog`}>Enter the dojo to see all →</a>
+    </p>
+  </recent-posts>
+</Layout>
+
+<style>
+  hero-section {
+    display: flex;
+    align-items: center;
+    gap: var(--space-m);
+    margin-block-end: var(--space-s);
+  }
+
+  hero-avatar {
+    flex-shrink: 0;
+
+    :global(img) {
+      width: 100px;
+      height: 100px;
+      border-radius: var(--radius-full, 50%);
+      border: 2px solid var(--border);
+      object-fit: cover;
+      filter: contrast(1.1);
+      transition: border-color 0.3s ease, filter 0.3s ease;
+    }
+
+    &:hover :global(img) {
+      border-color: var(--accent, #c41e3a);
+      filter: contrast(1.2);
+    }
+
+    @media (width < 30rem) {
+      :global(img) {
+        width: 72px;
+        height: 72px;
+      }
+    }
+  }
+
+  hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+
+    h1 {
+      font-size: var(--step-2);
+      line-height: 1.2;
+      font-weight: var(--font-weight-medium);
+      letter-spacing: -0.02em;
+    }
+
+    .tagline {
+      font-size: var(--step--1);
+      color: var(--muted-foreground);
+    }
+
+    .quote {
+      font-size: var(--step--1);
+      color: var(--muted-foreground);
+      opacity: 0.7;
+      margin-block-start: var(--space-3xs);
+    }
+
+    .quote-attr {
+      display: block;
+      font-size: 0.85em;
+      opacity: 0.6;
+    }
+  }
+
+  hr {
+    margin-block: var(--space-m);
+  }
+
+  prose-content a {
+    color: var(--foreground);
+    font-weight: var(--font-weight-medium);
+  }
+
+  recent-posts {
+    display: block;
+    margin-block-start: var(--space-xl);
+    
+    h2 {
+      font-size: var(--step-1);
+      margin-block-end: var(--space-2xl);
+      color: var(--muted-foreground);
+    }
+
+    .post-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-m);
+      list-style: none;
+      padding: 0;
+    }
+
+    .view-all {
+      margin-block-start: var(--space-m);
+      a {
+        color: var(--foreground);
+        font-weight: var(--font-weight-medium);
+      }
+    }
+  }
+</style>

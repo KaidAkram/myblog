@@ -1,0 +1,77 @@
+---
+import MetaPage from "@/components/MetaPage.astro"
+import Layout from "@/layouts/Layout.astro"
+import { Image } from "astro:assets"
+import profilePic from "@/assets/myprofilepic.jpg"
+---
+
+<Layout>
+  <MetaPage slot="head" title="About" description="Who is 0xAkr4m? Red Teamer, AI Security Enthusiast, and a Vagabond of the digital age." />
+
+  <prose-content>
+    <h1 transition:name="about-title">About</h1>
+
+    <about-hero>
+      <Image
+        src={profilePic}
+        alt="0xAkr4m"
+        width={200}
+        height={200}
+      />
+    </about-hero>
+
+    <h2>whoami</h2>
+    <p>
+      Yo. I'm <strong>0xAkr4m</strong>. I break things professionally as a Red Teamer and research AI security because the future needs stress-testing before it ships. 
+    </p>
+
+    <h2>what I do</h2>
+    <ul>
+      <li><strong>Red Teaming</strong> — Finding the holes in systems before the bad guys do.</li>
+      <li><strong>AI Security</strong> — Prompt injection, bypasses, and making models behave unexpectedly.</li>
+      <li><strong>CTFs</strong> — Continuously learning by solving labs.</li>
+      <li><strong>Writing</strong> — Documenting the journey so others (and future me) can learn from the process.</li>
+    </ul>
+
+    <h2>the vibe</h2>
+    <p>
+      This blog is heavily inspired by Miyamoto Musashi and the
+      <em>Vagabond</em> manga by Takehiko Inoue. The philosophy is simple: master your craft, stay curious, and always keep learning.
+    </p>
+
+    <h2>connect</h2>
+    <p>
+      Want to collaborate or chat?
+    </p>
+    <ul>
+      <li>GitHub: <a href="https://github.com/KaidAkram" target="_blank" rel="noopener noreferrer">@KaidAkram</a></li>
+      <li>Telegram: <a href="https://t.me/akramkd17" target="_blank" rel="noopener noreferrer">@akramkd17</a></li>
+      <li>LinkedIn: <a href="https://www.linkedin.com/in/akram-kaid/" target="_blank" rel="noopener noreferrer">Akram Kaid</a></li>
+      <li>Discord: <a href="https://discordapp.com/users/akramkaid_27366" target="_blank" rel="noopener noreferrer">@akramkaid_27366</a></li>
+    </ul>
+
+    <blockquote>
+      <p>
+        "There is nothing outside of yourself that can ever enable you to get
+        better, stronger, richer, quicker, or smarter. Everything is within."
+      </p>
+      <p>— Miyamoto Musashi</p>
+    </blockquote>
+  </prose-content>
+</Layout>
+
+<style>
+  about-hero {
+    display: block;
+    margin-block-end: var(--space-m);
+
+    :global(img) {
+      width: 140px;
+      height: 140px;
+      border-radius: var(--radius-full, 50%);
+      border: 2px solid var(--border);
+      object-fit: cover;
+      filter: contrast(1.1) grayscale(10%);
+    }
+  }
+</style>

@@ -1,0 +1,26 @@
+---
+import MetaPage from "@/components/MetaPage.astro"
+import Layout from "@/layouts/Layout.astro"
+---
+
+<Layout crumbs={[{ label: "404", href: "/404" }]}>
+  <MetaPage slot="head" title="404 — You Are Lost, Wanderer" />
+  <prose-content>
+    <h1>404</h1>
+    <p class="lost-msg">
+      <em>"Do not seek to follow in the footsteps of the wise; seek what they sought."</em>
+    </p>
+    <p>
+      You've wandered off the path, rōnin. This page doesn't exist —
+      probably got <code>rm -rf</code>'d into the void.
+    </p>
+    <p>
+      Maybe the URL was wrong, maybe I moved things around, or maybe this
+      page was never real and you're in a simulation. Who knows.
+    </p>
+    <p>
+      Either way, <a href={import.meta.env.BASE_URL}>go back to the dojo</a> before you get lost
+      in the bamboo forest.
+    </p>
+  </prose-content>
+</Layout>

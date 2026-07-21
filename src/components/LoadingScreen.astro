@@ -1,0 +1,160 @@
+---
+---
+
+<div id="ronin-loader" class="loader-overlay">
+  <div class="loader-content">
+    <div class="enso-container">
+      <!-- Minimalist SVG Enso (Zen Circle) -->
+      <svg class="enso-circle" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path class="enso-path" d="M 50 10 
+                 A 40 40 0 1 1 15 30" 
+              fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <!-- Katana Slash that strikes across -->
+      <div class="katana-slash"></div>
+    </div>
+    <div class="loading-text">
+      <span class="kanji">浪人</span>
+      <span class="eng">INITIALIZING...</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .loader-overlay {
+    position: fixed;
+    inset: 0;
+    background: #0a0a0a; /* Dark background matching theme */
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s cubic-bezier(0.86, 0, 0.07, 1);
+  }
+
+  .loader-overlay.fade-out {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .loader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .enso-container {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .enso-circle {
+    width: 100%;
+    height: 100%;
+    color: var(--foreground, #fff);
+    opacity: 0.8;
+    transform-origin: center;
+    animation: rotate-enso 4s linear infinite;
+  }
+
+  .enso-path {
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    animation: draw-enso 1s ease-out forwards;
+  }
+
+  .katana-slash {
+    position: absolute;
+    top: 50%;
+    left: -20%;
+    width: 140%;
+    height: 2px;
+    background: #c41e3a; /* Samurai crimson */
+    transform: translateY(-50%) rotate(-15deg) scaleX(0);
+    transform-origin: left center;
+    box-shadow: 0 0 10px #c41e3a, 0 0 20px #c41e3a;
+    animation: strike 0.3s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+    animation-delay: 0.8s;
+  }
+
+  .loading-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .kanji {
+    font-size: 1.5rem;
+    color: var(--foreground, #fff);
+    letter-spacing: 0.2em;
+    opacity: 0;
+    animation: fade-in 0.5s ease forwards;
+    animation-delay: 0.4s;
+  }
+
+  .eng {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.75rem;
+    color: #c41e3a;
+    letter-spacing: 0.3em;
+    opacity: 0;
+    animation: fade-in 0.5s ease forwards;
+    animation-delay: 1.1s;
+  }
+
+  @keyframes draw-enso {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes rotate-enso {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes strike {
+    0% { transform: translateY(-50%) rotate(-15deg) scaleX(0); }
+    100% { transform: translateY(-50%) rotate(-15deg) scaleX(1); }
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<script>
+  // In-memory flag persists across SPA navigations but resets on hard refresh
+  let hasBooted = false;
+
+  const handleLoader = () => {
+    const loader = document.getElementById("ronin-loader");
+    if (!loader) return;
+
+    if (hasBooted) {
+      // If already booted in this SPA session, remove instantly
+      loader.remove();
+    } else {
+      hasBooted = true; // Mark as booted for future SPA navigations
+      
+      // Wait 3s then fade out
+      setTimeout(() => {
+        loader.classList.add("fade-out");
+        
+        setTimeout(() => {
+          if (loader.parentNode) {
+            loader.parentNode.removeChild(loader);
+          }
+        }, 500); // Wait for CSS fade transition
+      }, 1250);
+    }
+  };
+
+  // Run on initial load and every ViewTransition navigation
+  document.addEventListener("astro:page-load", handleLoader);
+</script>
